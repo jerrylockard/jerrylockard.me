@@ -7,13 +7,13 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 // initializes against the same app rather than double-calling
 // initializeApp, which throws on a second [DEFAULT] app.
 const firebaseConfig = {
-  apiKey: "AIzaSyCAWTu03YJYLAjlMYAcVf5eB8UBR8yVOoY",
-  authDomain: "jerrylockard-website.firebaseapp.com",
-  projectId: "jerrylockard-website",
-  storageBucket: "jerrylockard-website.firebasestorage.app",
-  messagingSenderId: "428475521440",
-  appId: "1:428475521440:web:d3c441222bf67348e5ecc5",
-  measurementId: "G-3GEMY4N7NR",
+  apiKey: "AIzaSyBC_TCiUTPRQp9NJudiDhYcBvRTI-GBu50",
+  authDomain: "jerrylockard-me.firebaseapp.com",
+  projectId: "jerrylockard-me",
+  storageBucket: "jerrylockard-me.firebasestorage.app",
+  messagingSenderId: "959932622957",
+  appId: "1:959932622957:web:262b649cae038676e47764",
+  measurementId: "G-WS9RQDECH3",
 };
 
 export const app = initializeApp(firebaseConfig);
