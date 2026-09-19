@@ -33,6 +33,6 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile && pnpm build
-      - run: npx firebase-tools@latest deploy --only hosting --project jerrylockard-website --non-interactive
+      - run: npx firebase-tools@latest deploy --only hosting --project jerrylockard-me --non-interactive
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

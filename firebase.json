@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "jerrylockard-website",
+    "site": "jerrylockard-me",
     "public": "dist",
     "ignore": [
       "firebase.json",
