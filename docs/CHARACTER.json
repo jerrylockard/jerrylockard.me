@@ -62,6 +62,10 @@
       {
         "date": "2026-09-02",
         "entry": "Audit pass, boot sequence followed in full. Confirmed live via `gh run list`: the last two CI deploys (both today, after 25c11ca's jerrylockard-website project rename and aa992e5) failed with 'Input required and not supplied: firebaseServiceAccount' — `gh secret list` shows only FIREBASE_SERVICE_ACCOUNT_JERRYLOCKARD_SITE (old name), but both workflow files now reference FIREBASE_SERVICE_ACCOUNT_JERRYLOCKARD_WEBSITE, which doesn't exist as a secret. This is exactly the unresolved item CHANGELOG.md's 2026-08-31 entry flagged as required-before-next-merge-deploys-cleanly, now confirmed as the live failure. Live site is currently serving a stale build (last-modified 2026-08-31, from the last successful deploy) — not down, just frozen. Also confirmed via `dig`: the TXT verification record still reads hosting-site=jerrylockard-site (old project), matching the same unresolved changelog item. Separately, docs/CHEATSHEET.md's '## DNS (Cloudflare)' section is stale doc drift not caught by the 2026-08-30 IONOS migration edit — FACTS.md was fixed, CHEATSHEET.md's DNS section was not. Local `pnpm build` still succeeds (the 'writing collection empty' messages are expected/benign — zero posts is intentional per GUARDRAILS.md placeholder policy)."
+      },
+      {
+        "date": "2026-11-12",
+        "entry": "Nov 7 Firebase token death + refresh: the Aug 2026 FIREBASE_TOKEN died, breaking the first CI deploy (run 42331094497) on the first writing-post push; Jerry authorized a fresh token via Firebase sign-in, saved as the repo FIREBASE_TOKEN secret 2026-11-07T02:56:14Z, re-run succeeded and the announcement post verified live. CHANGELOG.md 2026-11-07 entry added with the same push. Workload Identity Federation (the real fix flagged 2026-09-05) still not done — a future deploy failing the same way means check the token first."
       }
     ]
   }

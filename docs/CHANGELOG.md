@@ -4,6 +4,21 @@ Real history, dated, newest first. Not derived from `git log` — a curated reco
 decisions and why, for context git commit messages don't carry. Check this for project
 history instead of re-asking Jerry to re-explain something already settled here.
 
+## 2026-11-07 — FIREBASE_TOKEN died and was refreshed; first writing post deployed
+
+The first push of a writing post (the Oct 27 shadow-day announcement, commit
+`73d7b0e`) failed its CI deploy: run 42331094497 errored because the
+`FIREBASE_TOKEN` secret — minted in August 2026 and unused since the 2026-09-05
+stopgap — was no longer valid. Jerry authorized a fresh token via Firebase sign-in
+and the new token was saved as the repo's `FIREBASE_TOKEN` secret (updated
+2026-11-07T02:56:14Z); the re-run succeeded and the post verified live via curl
+(HTTP 200).
+
+The token is a long-lived CLI credential and can silently expire again — the
+2026-09-05 entry's flagged Workload Identity Federation replacement is still the
+real fix and still not done. If a future deploy fails the same way, check the
+token before anything else.
+
 ## 2026-09-05 — CI deploy fixed: FIREBASE_TOKEN stopgap around a blocked service-account key
 
 The 2026-08-31 project rename left CI broken: `firebase-hosting-merge.yml` referenced
