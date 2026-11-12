@@ -31,10 +31,6 @@ Welcome remarks were given at the Covington Independent Public Schools podium.
 
 ![Welcome remarks at the Covington Independent Public Schools podium](/holmes-sme-prime-podium-welcome.jpg)
 
-Another speaker took the podium during the event.
-
-![Another speaker at the podium](/holmes-sme-prime-podium-speaker.jpg)
-
 Here is another moment from the podium.
 
 ![Another moment from the podium](/holmes-sme-prime-podium-moment.jpg)
