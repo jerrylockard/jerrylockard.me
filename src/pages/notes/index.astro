@@ -20,6 +20,11 @@ const writing = (await getCollection("writing", ({ data }) => !data.draft)).sort
 
 const hasAny = academyNotes.length > 0 || civicNotes.length > 0 || writing.length > 0;
 
+// Once a section reaches this many entries it starts compact (slim rows) with
+// a "Show all" toggle to expand to the full cards — so the page stays short
+// as more notes are added, and every section works the same way.
+const EXPAND_AT = 3;
+
 // Masthead photo for the page header — the most recent Academy note that has
 // one set (most won't, yet). Deliberately page-level, not shown on the
 // Academy card itself: it isn't from any one session, so pairing it with a
@@ -88,48 +93,93 @@ const featured = academyNotes.find((entry) => entry.data.image);
     )}
 
     {civicNotes.length > 0 && (
-      <section class="wrap observe notes-section" id="civic">
+      <section
+        class={`wrap observe notes-section${civicNotes.length >= EXPAND_AT ? " is-expandable is-compact" : ""}`}
+        id="civic"
+        data-count={civicNotes.length}
+      >
         <div class="section-head">
           <p class="eyebrow">Civic Field Notes</p>
-        </div>
-        <div class="notes-grid">
-          {civicNotes.slice(0, 3).map((entry) => <CivicNoteCard entry={entry} />)}
-        </div>
-        <div class="section-foot">
           <a class="section-link" href="/civic-notes">All civic notes &nbsp;→</a>
         </div>
+        <div class="notes-grid">
+          {civicNotes.map((entry) => <CivicNoteCard entry={entry} />)}
+        </div>
+        {civicNotes.length >= EXPAND_AT && (
+          <div class="section-expand">
+            <button type="button" class="expand-btn" aria-expanded="false">
+              Show all {civicNotes.length}
+            </button>
+          </div>
+        )}
       </section>
     )}
 
     {civicNotes.length > 0 && academyNotes.length > 0 && <Catenary tight />}
 
     {academyNotes.length > 0 && (
-      <section class="wrap observe notes-section" id="academy">
+      <section
+        class={`wrap observe notes-section${academyNotes.length >= EXPAND_AT ? " is-expandable is-compact" : ""}`}
+        id="academy"
+        data-count={academyNotes.length}
+      >
         <div class="section-head">
           <p class="eyebrow">Mayor's Academy</p>
           <a class="section-link" href="/academy-notes">All Academy Notes &nbsp;→</a>
         </div>
         <div class="notes-grid">
-          {academyNotes.slice(0, 3).map((entry) => <AcademyNoteCard entry={entry} />)}
+          {academyNotes.map((entry) => <AcademyNoteCard entry={entry} />)}
         </div>
+        {academyNotes.length >= EXPAND_AT && (
+          <div class="section-expand">
+            <button type="button" class="expand-btn" aria-expanded="false">
+              Show all {academyNotes.length}
+            </button>
+          </div>
+        )}
       </section>
     )}
 
     {(academyNotes.length > 0 || civicNotes.length > 0) && writing.length > 0 && <Catenary tight />}
 
     {writing.length > 0 && (
-      <section class="wrap observe notes-section" id="journal">
+      <section
+        class={`wrap observe notes-section${writing.length >= EXPAND_AT ? " is-expandable is-compact" : ""}`}
+        id="journal"
+        data-count={writing.length}
+      >
         <div class="section-head">
           <p class="eyebrow">Journal</p>
           <a class="section-link" href="/writing">All writing &nbsp;→</a>
         </div>
         <div class="notes-grid">
-          {writing.slice(0, 3).map((entry) => <JournalEntryCard entry={entry} />)}
+          {writing.map((entry) => <JournalEntryCard entry={entry} />)}
         </div>
+        {writing.length >= EXPAND_AT && (
+          <div class="section-expand">
+            <button type="button" class="expand-btn" aria-expanded="false">
+              Show all {writing.length}
+            </button>
+          </div>
+        )}
       </section>
     )}
   </main>
   <Footer />
+  <script>
+    // Expandable Notes sections: a section with 3+ entries starts compact
+    // (slim rows) and the button toggles it to the full cards.
+    document.querySelectorAll(".notes-section.is-expandable").forEach((section) => {
+      const btn = section.querySelector(".expand-btn");
+      if (!btn) return;
+      const total = section.dataset.count;
+      btn.addEventListener("click", () => {
+        const compact = section.classList.toggle("is-compact");
+        btn.setAttribute("aria-expanded", String(!compact));
+        btn.textContent = compact ? `Show all ${total}` : "Show less";
+      });
+    });
+  </script>
 </Layout>
 
 <style>
@@ -211,10 +261,27 @@ const featured = academyNotes.find((entry) => entry.data.image);
     align-items: stretch;
   }
 
-  .section-foot {
+  .section-expand {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .expand-btn {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--accent-ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: border-color 160ms ease;
+  }
+
+  .expand-btn:hover {
+    border-color: var(--accent);
   }
 
   .section-head {
@@ -245,5 +312,38 @@ const featured = academyNotes.find((entry) => entry.data.image);
   .empty-note {
     color: var(--ink-faint);
     padding: 24px 0 64px;
+  }
+</style>
+
+<style is:global>
+  /* Compact mode for a section with 3+ entries: slim single-column rows
+     (kicker + title + date) so all entries fit, with the summaries hidden
+     until the section is expanded. Global so it reaches the card
+     components' scoped styles. */
+  .notes-section.is-compact .notes-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .notes-section.is-compact .civic-card,
+  .notes-section.is-compact .academy-card,
+  .notes-section.is-compact .journal-card {
+    padding: 12px 16px;
+  }
+
+  .notes-section.is-compact .civic-card-summary,
+  .notes-section.is-compact .academy-card-summary,
+  .notes-section.is-compact .journal-card-teaser,
+  .notes-section.is-compact .civic-card-topics,
+  .notes-section.is-compact .civic-card-meta,
+  .notes-section.is-compact .academy-card-byline {
+    display: none;
+  }
+
+  .notes-section.is-compact .civic-card-title,
+  .notes-section.is-compact .academy-card-title,
+  .notes-section.is-compact .journal-card-title {
+    font-size: 1.1rem;
+    margin-bottom: 0;
   }
 </style>

@@ -4,6 +4,16 @@ Real history, dated, newest first. Not derived from `git log` — a curated reco
 decisions and why, for context git commit messages don't carry. Check this for project
 history instead of re-asking Jerry to re-explain something already settled here.
 
+## 2026-11-12 — Notes page sections made uniform and expandable
+
+All three sections on `/notes` (Civic Field Notes, Mayor's Academy, Journal) now share
+the same layout — section name on the left, "All …" link on the right (Civic's link was
+at the bottom before). Once a section reaches three entries it starts compact — slim
+rows showing just the title and date — with a "Show all N" button to expand to the full
+cards; sections under three entries show full cards as before. Journal (3 entries) is
+the first to compact; Civic (2) and Academy (1) switch over automatically as entries
+are added. No content changed; the toggle is a small inline script, no new dependency.
+
 ## 2026-11-07 — FIREBASE_TOKEN died and was refreshed; first writing post deployed
 
 The first push of a writing post (the Oct 27 shadow-day announcement, commit
