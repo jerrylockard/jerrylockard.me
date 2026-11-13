@@ -14,6 +14,16 @@ cards; sections under three entries show full cards as before. Journal (3 entrie
 the first to compact; Civic (2) and Academy (1) switch over automatically as entries
 are added. No content changed; the toggle is a small inline script, no new dependency.
 
+## 2026-11-12 — November 10 caucus civic note published
+
+"What I heard at Covington's November 10 caucus" is live under Civic Field Notes. Written
+from the meeting itself and filled in from the City's published November 10 agenda and
+backup packet — the Duveneck Square refinancing, the five hires, the 225-hour parental
+leave policy, the $16.28M RAISE grant, the $3.2M Convention Center land sale, and the
+$872,000 budget amendments, with "My view" built on the roughly $400,000 of budgeting
+misses. Status: advanced from caucus, next action November 17. This makes three civic
+notes, so the Civic section on /notes now compacts with a "Show all 3" button too.
+
 ## 2026-11-07 — FIREBASE_TOKEN died and was refreshed; first writing post deployed
 
 The first push of a writing post (the Oct 27 shadow-day announcement, commit
